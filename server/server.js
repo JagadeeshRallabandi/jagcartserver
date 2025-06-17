@@ -4,11 +4,13 @@ import cors from 'cors';
 import connectDB from './configs/db.js';
 import 'dotenv/config';
 import userRouter from './routes/userRoute.js';
+import sellerRouter from './routes/sellerRoute.js';
+import connectCloudinary from './configs/cloudinary.js';
 const app = express();
 const port = process.env.PORT || 4000;
 
 await connectDB();
-
+await connectCloudinary();
 //Allow multiple origins
 const allowedOrigins = ['http://localhost:5173']
 //Middleware configurations
@@ -21,7 +23,7 @@ app.get('/',(req,res)=>{
     res.send("API is working")
 });
 app.use('/api/user',userRouter);
-
+app.use('/api/seller',sellerRouter);
 app.listen(port,()=>{
     console.log(`Server is running on http://localhost:${port}`)
 })
